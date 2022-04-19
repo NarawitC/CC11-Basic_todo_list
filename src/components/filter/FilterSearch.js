@@ -1,0 +1,13 @@
+import Button from '../ui/Button';
+import FilterStatus from './FilterStatus';
+function FilterSearch() {
+  return (
+    <div className="input-group shadow ">
+      <input type="text" className="form-control" placeholder="Search" />
+      <Button color="dark">
+        <i className="fa-solid fa-x"></i>
+      </Button>
+    </div>
+  );
+}
+export default FilterSearch;
