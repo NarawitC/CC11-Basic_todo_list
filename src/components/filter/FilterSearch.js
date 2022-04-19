@@ -1,5 +1,5 @@
 import Button from '../ui/Button';
-import FilterStatus from './FilterStatus';
+
 function FilterSearch() {
   return (
     <div className="input-group shadow ">

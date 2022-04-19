@@ -1,12 +1,11 @@
 import Todo from './Todo';
-function TodoList() {
+function TodoList(props) {
   return (
     <div>
       <ul className="list-group shadow mt-4">
-        <Todo title="Homework" completed={true}></Todo>
-        <Todo title="Personal project figma" completed={false}></Todo>
-        <Todo title="Midterm exam" completed={false}></Todo>
-        <Todo title="Lab" completed={true}></Todo>
+        {props.todoList.map((el) => (
+          <Todo key={el.id} title={el.title} completed={el.completed}></Todo>
+        ))}
       </ul>
     </div>
   );

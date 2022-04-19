@@ -10,10 +10,10 @@ function Todo(props) {
       <span>{title}</span>
       <div className="btn-group ">
         <Button color="outline-info">
-          <i class={`fa-solid fa-toggle-${completed ? 'on' : 'off'}`}></i>
+          <i className={`fa-solid fa-toggle-${completed ? 'on' : 'off'}`}></i>
         </Button>
         <Button color="outline-danger">
-          <i class="fa-regular fa-trash-can"></i>
+          <i className="fa-regular fa-trash-can"></i>
         </Button>
       </div>
     </li>
