@@ -8,10 +8,10 @@ function TodoInput(props) {
   };
   return (
     <>
-      <div className="input-group shadow">
+      <div className="input-group shadow ">
         <input
           type="text"
-          className="form-control"
+          className={`form-control ${props.displayValid}`}
           placeholder="Enter new todo"
           value={todoInput}
           onChange={(event) => setTodoInput(event.target.value)}
@@ -19,12 +19,11 @@ function TodoInput(props) {
         <Button color="success" onClick={() => addTodoAndUpdateInput()}>
           <i className="fa-solid fa-plus"></i>
         </Button>
-
         <Button color="outline-secondary" onClick={() => setTodoInput('')}>
           <i className="fa-solid fa-x"></i>
         </Button>
       </div>
-      {/* <small className='text-red'>Title is required.</small> */}
+      <small className={`text-danger d-${props.displayText}`}>Task is required.</small>
     </>
   );
 }
