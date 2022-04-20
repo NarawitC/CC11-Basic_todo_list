@@ -15,7 +15,12 @@ function Todo(props) {
     >
       {isEditing ? (
         <>
-          <TodoInput id={id} title={title} handleSetIsEditing={handleSetIsEditing} updateTodo={updateTodo}></TodoInput>
+          <TodoInput
+            id={id}
+            title={title}
+            handleSetIsEditing={handleSetIsEditing}
+            updateTodo={props.updateTodo}
+          ></TodoInput>
         </>
       ) : (
         <>
@@ -30,7 +35,9 @@ function Todo(props) {
                 updateTodo({ completed: !completed }, id);
               }}
             >
-              <i className={`fa-solid fa-toggle-${completed ? 'on' : 'off'}`}></i>
+              <i
+                className={`fa-solid fa-toggle-${completed ? 'on' : 'off'}`}
+              ></i>
             </Button>
             <Button color="outline-danger" onClick={() => removeTodo(id)}>
               <i className="fa-regular fa-trash-can"></i>

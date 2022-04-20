@@ -13,6 +13,7 @@ const initialTodoLits = [
 ];
 function App() {
   const [todoList, setTodoList] = useState(initialTodoLits);
+  const [searchStatus, setSearchStatus] = useState(null);
   const handleAddTodoList = (title) => {
     let newTodoList = { title, completed: true, id: uuidv4() };
     setTodoList(() => [newTodoList, ...todoList]);
@@ -33,12 +34,36 @@ function App() {
       setTodoList(oldTodoList);
     }
   };
+  const changeSearchStatus = (value) => {
+    setSearchStatus(value);
+  };
+  let filteredTodoList = [];
+  switch (searchStatus) {
+    case true: {
+      filteredTodoList = todoList.filter((el) => el.completed);
+      break;
+    }
+    case false: {
+      filteredTodoList = todoList.filter((el) => !el.completed);
+      break;
+    }
+    default:
+      filteredTodoList = [...todoList];
+  }
+
   return (
     <div className="container max-w-xs pt-5">
       <TodoInput handleAddTodoList={handleAddTodoList}></TodoInput>
-      <Filter></Filter>
+      <Filter
+        changeSearchStatus={changeSearchStatus}
+        searchStatus={searchStatus}
+      ></Filter>
       <PageLimit></PageLimit>
-      <TodoList todoList={todoList} removeTodo={removeTodo} updateTodo={updateTodo}></TodoList>
+      <TodoList
+        todoList={filteredTodoList}
+        removeTodo={removeTodo}
+        updateTodo={updateTodo}
+      ></TodoList>
       <Pagination></Pagination>
     </div>
   );

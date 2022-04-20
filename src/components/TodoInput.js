@@ -6,18 +6,18 @@ function TodoInput(props) {
   const [displayValid, setDisplayValid] = useState('');
   const addTodoAndUpdateInput = () => {
     if (!todoInput) {
-      if (todoInput.length > 0) {
+      setDisplayText('block');
+      setDisplayValid('is-invalid');
+    } else {
+      if (props.id) {
+        props.updateTodo({ title: todoInput }, props.id);
+        props.handleSetIsEditing();
+      } else {
         props.handleAddTodoList(todoInput);
         setDisplayText('none');
         setDisplayValid('');
-      } else {
-        setDisplayText('block');
-        setDisplayValid('is-invalid');
+        setTodoInput('');
       }
-      setTodoInput('');
-    } else {
-      props.updateTodo({ title: todoInput }, props.id);
-      props.handleSetIsEditing();
     }
   };
   const resetDisplayOnChange = () => {
@@ -57,7 +57,9 @@ function TodoInput(props) {
           <i className="fa-solid fa-x"></i>
         </Button>
       </div>
-      <small className={`text-danger d-${displayText}`}>Task is required.</small>
+      <small className={`text-danger d-${displayText}`}>
+        Task is required.
+      </small>
     </>
   );
 }
