@@ -1,19 +1,24 @@
 import Button from './ui/Button';
 import { useState } from 'react';
 function TodoInput(props) {
-  const [todoInput, setTodoInput] = useState('');
+  const [todoInput, setTodoInput] = useState(props.title || '');
   const [displayText, setDisplayText] = useState('none');
   const [displayValid, setDisplayValid] = useState('');
   const addTodoAndUpdateInput = () => {
-    if (todoInput.length > 0) {
-      props.handleAddTodoList(todoInput);
-      setDisplayText('none');
-      setDisplayValid('');
+    if (!todoInput) {
+      if (todoInput.length > 0) {
+        props.handleAddTodoList(todoInput);
+        setDisplayText('none');
+        setDisplayValid('');
+      } else {
+        setDisplayText('block');
+        setDisplayValid('is-invalid');
+      }
+      setTodoInput('');
     } else {
-      setDisplayText('block');
-      setDisplayValid('is-invalid');
+      props.updateTodo({ title: todoInput }, props.id);
+      props.handleSetIsEditing();
     }
-    setTodoInput('');
   };
   const resetDisplayOnChange = () => {
     setDisplayText('none');
@@ -21,7 +26,7 @@ function TodoInput(props) {
   };
   return (
     <>
-      <div className="input-group shadow ">
+      <div className="input-group shadow">
         <input
           type="text"
           className={`form-control ${displayValid}`}
@@ -32,10 +37,23 @@ function TodoInput(props) {
             setTodoInput(event.target.value);
           }}
         />
-        <Button color="success" onClick={() => addTodoAndUpdateInput()}>
-          <i className="fa-solid fa-plus"></i>
-        </Button>
-        <Button color="outline-secondary" onClick={() => setTodoInput('')}>
+        {props.id ? (
+          <Button color="primary" onClick={() => addTodoAndUpdateInput()}>
+            <i className="fa-solid fa-check"></i>
+          </Button>
+        ) : (
+          <Button color="success" onClick={() => addTodoAndUpdateInput()}>
+            <i className="fa-solid fa-plus"></i>
+          </Button>
+        )}
+        <Button
+          color="outline-secondary"
+          onClick={() => {
+            if (props.id) {
+              props.handleSetIsEditing();
+            } else setTodoInput('');
+          }}
+        >
           <i className="fa-solid fa-x"></i>
         </Button>
       </div>
