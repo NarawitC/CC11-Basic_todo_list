@@ -13,27 +13,13 @@ const initialTodoLits = [
 ];
 function App() {
   const [todoList, setTodoList] = useState(initialTodoLits);
-  const [displayText, setDisplayText] = useState('none');
-  const [displayValid, setDisplayValid] = useState('');
   const handleAddTodoList = (title) => {
-    if (title.length > 0) {
-      todoList.unshift({ title, completed: true, id: uuidv4() });
-      setDisplayText('none');
-      setDisplayValid('');
-    } else {
-      setDisplayText('block');
-      setDisplayValid('is-invalid');
-    }
-
-    setTodoList(() => [...todoList]);
+    let newTodoList = { title, completed: true, id: uuidv4() };
+    setTodoList(() => [newTodoList, ...todoList]);
   };
   return (
     <div className="container max-w-xs pt-5">
-      <TodoInput
-        handleAddTodoList={handleAddTodoList}
-        displayText={displayText}
-        displayValid={displayValid}
-      ></TodoInput>
+      <TodoInput handleAddTodoList={handleAddTodoList}></TodoInput>
       <Filter></Filter>
       <PageLimit></PageLimit>
       <TodoList todoList={todoList}></TodoList>
