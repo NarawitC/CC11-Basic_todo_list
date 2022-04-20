@@ -1,46 +1,85 @@
-import Button from './ui/Button';
 import { useState } from 'react';
+import { validateRegister } from './Validate';
+
 function TodoInput(props) {
-  const [todoInput, setTodoInput] = useState('');
-  const [displayText, setDisplayText] = useState('none');
-  const [displayValid, setDisplayValid] = useState('');
-  const addTodoAndUpdateInput = () => {
-    if (todoInput.length > 0) {
-      props.handleAddTodoList(todoInput);
-      setDisplayText('none');
-      setDisplayValid('');
+  const [input, setInput] = useState({
+    email: '',
+    username: '',
+    phoneNumber: '',
+  });
+
+  const [error, setError] = useState({});
+
+  const handleChangeInput = (event) => {
+    const oldInput = { ...input };
+    oldInput[event.target.name] = event.target.value;
+    setInput(oldInput);
+  };
+
+  const handleSubmitForm = (event) => {
+    event.preventDefault();
+
+    const newError = validateRegister(input.email, input.username, input.phoneNumber);
+
+    if (Object.keys(newError).length > 0) {
+      setError(newError);
     } else {
-      setDisplayText('block');
-      setDisplayValid('is-invalid');
+      setError({});
     }
-    setTodoInput('');
   };
-  const resetDisplayOnChange = () => {
-    setDisplayText('none');
-    setDisplayValid('');
-  };
+
   return (
-    <>
-      <div className="input-group shadow ">
+    <form onSubmit={handleSubmitForm}>
+      <div className="mb-3">
+        <label htmlFor="email" className="form-label">
+          Email address
+        </label>
         <input
           type="text"
-          className={`form-control ${displayValid}`}
-          placeholder="Enter new todo"
-          value={todoInput}
-          onChange={(event) => {
-            resetDisplayOnChange();
-            setTodoInput(event.target.value);
-          }}
+          className="form-control"
+          id="email"
+          name="email"
+          value={input.email}
+          onChange={handleChangeInput}
         />
-        <Button color="success" onClick={() => addTodoAndUpdateInput()}>
-          <i className="fa-solid fa-plus"></i>
-        </Button>
-        <Button color="outline-secondary" onClick={() => setTodoInput('')}>
-          <i className="fa-solid fa-x"></i>
-        </Button>
+        {error.email && <small className="text-danger">{error.email}</small>}
       </div>
-      <small className={`text-danger d-${displayText}`}>Task is required.</small>
-    </>
+      <div className="mb-3">
+        <label htmlFor="username" className="form-label">
+          Username
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          id="username"
+          name="username"
+          value={input.username}
+          onChange={handleChangeInput}
+        />
+        {error.username && <small className="text-danger">{error.username}</small>}
+      </div>
+      <div className="mb-3">
+        <label htmlFor="phoneNumber" className="form-label">
+          Phone Number
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          id="phoneNumber"
+          name="phoneNumber"
+          value={input.phoneNumber}
+          onChange={handleChangeInput}
+        />
+        {error.phoneNumber && <small className="text-danger">{error.phoneNumber}</small>}
+      </div>
+      <button type="submit" className="btn btn-primary">
+        Submit
+      </button>
+      <button type="button" className="btn btn-success ms-3">
+        Cancel
+      </button>
+    </form>
   );
 }
+
 export default TodoInput;

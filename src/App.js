@@ -20,10 +20,10 @@ function App() {
   return (
     <div className="container max-w-xs pt-5">
       <TodoInput handleAddTodoList={handleAddTodoList}></TodoInput>
-      <Filter></Filter>
+      {/* <Filter></Filter>
       <PageLimit></PageLimit>
       <TodoList todoList={todoList}></TodoList>
-      <Pagination></Pagination>
+      <Pagination></Pagination> */}
     </div>
   );
 }
