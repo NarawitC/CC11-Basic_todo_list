@@ -31,7 +31,6 @@ function Todo(props) {
             <Button
               color="outline-info"
               onClick={() => {
-                setIsEditing(true);
                 updateTodo({ completed: !completed }, id);
               }}
             >
